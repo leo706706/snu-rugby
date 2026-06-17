@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { getPlayers } from "@/lib/data/players";
 import PlayerFilters from "@/components/players/PlayerFilters";
-import PlayerCard from "@/components/players/PlayerCard";
+import PlayerGrid from "@/components/players/PlayerGrid";
 import type { Division, PlayerStatus } from "@/types/database";
 
 export const dynamic = "force-dynamic";
@@ -33,11 +33,7 @@ export default async function PlayersPage({
         {players.length === 0 ? (
           <p className="mt-16 text-center text-neutral-400">조건에 맞는 선수가 없습니다.</p>
         ) : (
-          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {players.map((player) => (
-              <PlayerCard key={player.id} player={player} />
-            ))}
-          </div>
+          <PlayerGrid players={players} />
         )}
       </div>
     </div>
