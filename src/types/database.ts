@@ -92,3 +92,12 @@ export interface Admin {
   email: string;
   created_at: string;
 }
+
+export type PageKey = "home" | "players" | "schedule" | "notices" | "gallery";
+
+export interface PageBanner {
+  page_key: PageKey;
+  image_url: string;
+  created_at: string;
+  updated_at: string;
+}

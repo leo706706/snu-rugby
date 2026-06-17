@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function HeroBanner() {
+export default function HeroBanner({ imageUrl }: { imageUrl: string }) {
   return (
     <section className="relative flex h-screen min-h-[640px] items-center justify-center overflow-hidden">
       <Image
-        src="/images/rugby_197.jpg"
+        src={imageUrl}
         alt=""
         fill
         priority

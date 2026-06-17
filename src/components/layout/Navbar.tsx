@@ -20,10 +20,11 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-navy-100 bg-white/90 backdrop-blur-md">
       <div className="container-page flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-          <Image src="/images/snu_logo.png" alt="" width={28} height={28} className="h-7 w-auto" />
-          <span className="text-lg font-semibold tracking-tight text-navy">
-            SNU RUGBY
+        <Link href="/" className="flex items-center gap-2.5" onClick={() => setOpen(false)}>
+          <Image src="/images/rugby_logo_navy.png" alt="" width={32} height={24} className="h-8 w-auto" />
+          <span className="flex flex-col leading-tight">
+            <span className="text-base font-semibold tracking-tight text-navy">서울대학교 럭비부</span>
+            <span className="text-[11px] font-medium tracking-[0.15em] text-neutral-400">SNU RUGBY</span>
           </span>
         </Link>
 
