@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { createClient } from "@/lib/supabase/client";
+import ImageCropper from "@/components/admin/ImageCropper";
 
 interface DropzoneProps {
   bucket: string;
@@ -11,6 +12,8 @@ interface DropzoneProps {
   accept?: Record<string, string[]>;
   onUploaded: (urls: string[]) => void;
   label?: string;
+  /** When set, a single dropped image is cropped to this aspect ratio (width / height) before upload. */
+  cropAspect?: number;
 }
 
 export default function Dropzone({
@@ -20,13 +23,14 @@ export default function Dropzone({
   accept,
   onUploaded,
   label = "파일을 드래그하거나 클릭해서 업로드",
+  cropAspect,
 }: DropzoneProps) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [cropFile, setCropFile] = useState<File | null>(null);
 
-  const onDrop = useCallback(
-    async (acceptedFiles: File[]) => {
-      if (acceptedFiles.length === 0) return;
+  const uploadFiles = useCallback(
+    async (files: File[]) => {
       setUploading(true);
       setError(null);
 
@@ -34,7 +38,7 @@ export default function Dropzone({
         const supabase = createClient();
         const urls: string[] = [];
 
-        for (const file of acceptedFiles) {
+        for (const file of files) {
           const path = `${pathPrefix ? `${pathPrefix}/` : ""}${crypto.randomUUID()}-${file.name}`;
           const { error: uploadError } = await supabase.storage
             .from(bucket)
@@ -56,11 +60,40 @@ export default function Dropzone({
     [bucket, pathPrefix, onUploaded],
   );
 
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      if (acceptedFiles.length === 0) return;
+
+      if (cropAspect && !multiple && acceptedFiles[0].type.startsWith("image/")) {
+        setError(null);
+        setCropFile(acceptedFiles[0]);
+        return;
+      }
+
+      uploadFiles(acceptedFiles);
+    },
+    [cropAspect, multiple, uploadFiles],
+  );
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     multiple,
     accept,
   });
+
+  if (cropFile) {
+    return (
+      <ImageCropper
+        file={cropFile}
+        aspect={cropAspect!}
+        onCancel={() => setCropFile(null)}
+        onCropped={(croppedFile) => {
+          setCropFile(null);
+          uploadFiles([croppedFile]);
+        }}
+      />
+    );
+  }
 
   return (
     <div>

@@ -56,6 +56,7 @@ export default function AlbumForm({
             accept={IMAGE_ACCEPT}
             onUploaded={(urls) => setCoverImageUrl(urls[0])}
             label="커버 이미지를 드래그하거나 클릭해서 업로드"
+            cropAspect={3 / 2}
           />
         </div>
       </div>

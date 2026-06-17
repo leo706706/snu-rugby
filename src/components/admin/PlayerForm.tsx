@@ -69,6 +69,7 @@ export default function PlayerForm({
             accept={{ "image/*": [".png", ".jpg", ".jpeg", ".webp", ".gif"] }}
             onUploaded={(urls) => setPhotoUrl(urls[0])}
             label="사진을 드래그하거나 클릭해서 업로드"
+            cropAspect={1}
           />
         </div>
       </div>
