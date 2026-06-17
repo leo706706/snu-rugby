@@ -1,28 +1,43 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function HeroBanner() {
   return (
-    <section className="bg-white">
-      <div className="container-page flex min-h-[70vh] flex-col items-center justify-center py-24 text-center">
-        <p className="text-sm font-medium uppercase tracking-[0.2em] text-navy">
+    <section className="relative flex h-screen min-h-[640px] items-center justify-center overflow-hidden">
+      <Image
+        src="/images/rugby_197.jpg"
+        alt=""
+        fill
+        priority
+        className="object-cover object-[center_25%] brightness-[0.38]"
+      />
+      <div className="container-page relative z-10 flex flex-col items-center text-center text-white">
+        <Image
+          src="/images/rugby_logo.png"
+          alt="SNU Rugby Club"
+          width={80}
+          height={80}
+          className="mb-6"
+        />
+        <p className="text-sm font-medium uppercase tracking-[0.2em] text-white/80">
           Seoul National University
         </p>
-        <h1 className="mt-4 max-w-3xl text-5xl font-semibold leading-tight tracking-tightish text-neutral-900 sm:text-7xl">
-          서울대학교 럭비부
+        <h1 className="mt-3 text-[clamp(2.4em,6vw,5em)] font-bold leading-tight tracking-tightish">
+          Rugby Club
         </h1>
-        <p className="mt-6 max-w-md text-base text-neutral-500 sm:text-lg">
-          도전과 협동의 정신으로 그라운드를 누비는 SNU RUGBY입니다.
+        <p className="mt-4 text-sm font-medium uppercase tracking-[0.25em] text-white/70 sm:text-base">
+          ONE FOR ALL, ALL FOR ONE
         </p>
         <div className="mt-10 flex gap-3">
           <Link
             href="/players"
-            className="rounded-full bg-navy px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-navy-700"
+            className="rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-colors hover:bg-white/90"
           >
             선수단 보기
           </Link>
           <Link
             href="/schedule"
-            className="rounded-full border border-neutral-200 px-6 py-3 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-50"
+            className="rounded-full border border-white/70 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-white/10"
           >
             경기 일정
           </Link>
