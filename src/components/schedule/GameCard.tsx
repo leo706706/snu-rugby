@@ -1,10 +1,5 @@
 import type { Game } from "@/types/database";
 
-const DIVISION_LABEL: Record<Game["division"], string> = {
-  men: "남자부",
-  women: "여자부",
-};
-
 const RESULT_LABEL: Record<NonNullable<Game["result"]>, string> = {
   win: "승",
   loss: "패",
@@ -32,11 +27,8 @@ export default function GameCard({ game }: { game: Game }) {
   return (
     <div className="flex flex-col gap-4 rounded-2xl border border-navy-50 bg-white p-6 sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <div className="flex items-center gap-2 text-xs font-medium text-navy-400">
-          <span className="rounded-full bg-navy-50 px-2.5 py-1">
-            {DIVISION_LABEL[game.division]}
-          </span>
-          <span>{game.status === "cancelled" ? "취소됨" : formatDate(game.game_date)}</span>
+        <div className="text-xs font-medium text-navy-400">
+          {game.status === "cancelled" ? "취소됨" : formatDate(game.game_date)}
         </div>
         <p className="mt-2 text-lg font-semibold text-neutral-900">
           vs {game.opponent}
@@ -60,6 +52,12 @@ export default function GameCard({ game }: { game: Game }) {
             {game.our_score} : {game.opponent_score}
           </span>
         </div>
+      )}
+
+      {game.status === "completed" && !game.result && game.notes && (
+        <span className="self-start rounded-full bg-navy-50 px-3 py-1 text-sm font-semibold text-navy sm:self-center">
+          {game.notes}
+        </span>
       )}
     </div>
   );
