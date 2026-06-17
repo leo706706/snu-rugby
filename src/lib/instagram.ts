@@ -37,6 +37,46 @@ const MOCK_POSTS: InstagramPost[] = [
   },
 ];
 
+interface GraphMediaItem {
+  id: string;
+  caption?: string;
+  media_type: "IMAGE" | "VIDEO" | "CAROUSEL_ALBUM";
+  media_url: string;
+  thumbnail_url?: string;
+  permalink: string;
+  timestamp: string;
+}
+
+async function fetchGraphFeed(limit: number): Promise<InstagramPost[]> {
+  const accessToken = process.env.IG_ACCESS_TOKEN;
+  const userId = process.env.IG_USER_ID;
+
+  if (!accessToken || !userId) {
+    return MOCK_POSTS.slice(0, limit);
+  }
+
+  const fields = "id,caption,media_type,media_url,thumbnail_url,permalink,timestamp";
+  const url = `https://graph.facebook.com/v21.0/${userId}/media?fields=${fields}&limit=${limit}&access_token=${accessToken}`;
+
+  try {
+    const res = await fetch(url, { next: { revalidate: 3600 } });
+    if (!res.ok) throw new Error(`Instagram API error: ${res.status}`);
+
+    const json = (await res.json()) as { data?: GraphMediaItem[] };
+    const items = json.data ?? [];
+
+    return items.map((item) => ({
+      id: item.id,
+      caption: item.caption ?? "",
+      mediaUrl: item.media_type === "VIDEO" ? item.thumbnail_url ?? item.media_url : item.media_url,
+      permalink: item.permalink,
+      timestamp: item.timestamp,
+    }));
+  } catch {
+    return MOCK_POSTS.slice(0, limit);
+  }
+}
+
 export async function getInstagramFeed(limit = 4): Promise<InstagramPost[]> {
   const useMock = process.env.NEXT_PUBLIC_USE_INSTAGRAM_MOCK !== "false";
 
@@ -44,8 +84,5 @@ export async function getInstagramFeed(limit = 4): Promise<InstagramPost[]> {
     return MOCK_POSTS.slice(0, limit);
   }
 
-  // Real integration point: call the Instagram Graph API here using a
-  // long-lived access token (IG_ACCESS_TOKEN, server-only env var) and map
-  // the response into InstagramPost[]. Left unimplemented for Phase 1.
-  return MOCK_POSTS.slice(0, limit);
+  return fetchGraphFeed(limit);
 }
