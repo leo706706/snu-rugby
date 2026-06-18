@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getNotices } from "@/lib/data/notices";
+import FadeIn from "@/components/common/FadeIn";
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("ko-KR", {
@@ -18,7 +19,7 @@ export default async function NoticesPreview() {
   return (
     <section className="section bg-navy-50/40">
       <div className="container-page">
-        <div className="flex items-end justify-between">
+        <FadeIn className="flex items-end justify-between">
           <div>
             <p className="text-sm font-medium uppercase tracking-[0.15em] text-navy-400">
               Notices
@@ -28,28 +29,30 @@ export default async function NoticesPreview() {
           <Link href="/notices" className="text-sm font-medium text-navy hover:underline">
             전체보기 →
           </Link>
-        </div>
+        </FadeIn>
 
-        <ul className="mt-10 divide-y divide-navy-100 border-y border-navy-100">
-          {featured.map((notice) => (
-            <li key={notice.id}>
-              <Link
-                href={`/notices/${notice.id}`}
-                className="flex flex-col gap-1 py-5 sm:flex-row sm:items-center sm:justify-between"
-              >
-                <span className="flex items-center gap-3">
-                  {notice.is_pinned && (
-                    <span className="rounded-full bg-navy px-2.5 py-0.5 text-xs font-medium text-white">
-                      고정
-                    </span>
-                  )}
-                  <span className="font-medium text-neutral-900">{notice.title}</span>
-                </span>
-                <span className="text-sm text-neutral-400">{formatDate(notice.created_at)}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <FadeIn delay={100}>
+          <ul className="mt-10 divide-y divide-navy-100 border-y border-navy-100">
+            {featured.map((notice) => (
+              <li key={notice.id}>
+                <Link
+                  href={`/notices/${notice.id}`}
+                  className="flex flex-col gap-1 py-5 sm:flex-row sm:items-center sm:justify-between"
+                >
+                  <span className="flex items-center gap-3">
+                    {notice.is_pinned && (
+                      <span className="rounded-full bg-navy px-2.5 py-0.5 text-xs font-medium text-white">
+                        고정
+                      </span>
+                    )}
+                    <span className="font-medium text-neutral-900">{notice.title}</span>
+                  </span>
+                  <span className="text-sm text-neutral-400">{formatDate(notice.created_at)}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </FadeIn>
       </div>
     </section>
   );

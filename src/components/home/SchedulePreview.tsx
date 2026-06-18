@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllGames } from "@/lib/data/games";
 import GameCard from "@/components/schedule/GameCard";
+import FadeIn from "@/components/common/FadeIn";
 
 export default async function SchedulePreview() {
   const games = await getAllGames();
@@ -20,7 +21,7 @@ export default async function SchedulePreview() {
   return (
     <section className="section">
       <div className="container-page">
-        <div className="flex items-end justify-between">
+        <FadeIn className="flex items-end justify-between">
           <div>
             <p className="text-sm font-medium uppercase tracking-[0.15em] text-navy-400">
               Schedule
@@ -30,13 +31,13 @@ export default async function SchedulePreview() {
           <Link href="/schedule" className="text-sm font-medium text-navy hover:underline">
             전체보기 →
           </Link>
-        </div>
+        </FadeIn>
 
-        <div className="mt-10 flex flex-col gap-4">
+        <FadeIn delay={100} className="mt-10 flex flex-col gap-4">
           {featured.map((game) => (
             <GameCard key={game.id} game={game} />
           ))}
-        </div>
+        </FadeIn>
       </div>
     </section>
   );

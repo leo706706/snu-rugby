@@ -3,6 +3,7 @@ import { getAllGames } from "@/lib/data/games";
 import { getBanner } from "@/lib/data/banners";
 import GameCard from "@/components/schedule/GameCard";
 import PageBanner from "@/components/common/PageBanner";
+import FadeIn from "@/components/common/FadeIn";
 
 export const dynamic = "force-dynamic";
 
@@ -42,17 +43,17 @@ export default async function SchedulePage() {
       />
       <div className="section">
         <div className="container-page">
-          <section className="mt-12">
+          <FadeIn as="section" className="mt-12">
             <h2 className="text-xl font-semibold text-neutral-900">다가오는 경기</h2>
             <DivisionGroup label="남자부" games={upcoming.filter((g) => g.division === "men")} />
             <DivisionGroup label="여자부" games={upcoming.filter((g) => g.division === "women")} />
-          </section>
+          </FadeIn>
 
-          <section className="mt-16">
+          <FadeIn as="section" className="mt-16">
             <h2 className="text-xl font-semibold text-neutral-900">지난 경기</h2>
             <DivisionGroup label="남자부" games={past.filter((g) => g.division === "men")} />
             <DivisionGroup label="여자부" games={past.filter((g) => g.division === "women")} />
-          </section>
+          </FadeIn>
         </div>
       </div>
     </div>

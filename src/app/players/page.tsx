@@ -4,6 +4,7 @@ import { getBanner } from "@/lib/data/banners";
 import PlayerFilters from "@/components/players/PlayerFilters";
 import PlayerGrid from "@/components/players/PlayerGrid";
 import PageBanner from "@/components/common/PageBanner";
+import FadeIn from "@/components/common/FadeIn";
 import type { Division, PlayerStatus } from "@/types/database";
 
 export const dynamic = "force-dynamic";
@@ -41,7 +42,9 @@ export default async function PlayersPage({
           {players.length === 0 ? (
             <p className="mt-16 text-center text-neutral-400">조건에 맞는 선수가 없습니다.</p>
           ) : (
-            <PlayerGrid players={players} />
+            <FadeIn>
+              <PlayerGrid players={players} />
+            </FadeIn>
           )}
         </div>
       </div>

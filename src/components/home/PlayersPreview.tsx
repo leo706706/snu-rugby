@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getPlayers } from "@/lib/data/players";
 import PlayerGrid from "@/components/players/PlayerGrid";
+import FadeIn from "@/components/common/FadeIn";
 
 export default async function PlayersPreview() {
   const players = await getPlayers({ status: "current" });
@@ -11,7 +12,7 @@ export default async function PlayersPreview() {
   return (
     <section className="section bg-navy-50/40">
       <div className="container-page">
-        <div className="flex items-end justify-between">
+        <FadeIn className="flex items-end justify-between">
           <div>
             <p className="text-sm font-medium uppercase tracking-[0.15em] text-navy-400">
               Players
@@ -21,9 +22,11 @@ export default async function PlayersPreview() {
           <Link href="/players" className="text-sm font-medium text-navy hover:underline">
             전체보기 →
           </Link>
-        </div>
+        </FadeIn>
 
-        <PlayerGrid players={featured} />
+        <FadeIn delay={100}>
+          <PlayerGrid players={featured} />
+        </FadeIn>
       </div>
     </section>
   );

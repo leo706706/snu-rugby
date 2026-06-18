@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getAlbums } from "@/lib/data/gallery";
 import { getBanner } from "@/lib/data/banners";
 import PageBanner from "@/components/common/PageBanner";
+import FadeIn from "@/components/common/FadeIn";
 
 export const dynamic = "force-dynamic";
 
@@ -29,7 +30,7 @@ export default async function GalleryPage() {
           {albums.length === 0 ? (
             <p className="mt-16 text-center text-neutral-400">등록된 앨범이 없습니다.</p>
           ) : (
-            <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <FadeIn className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {albums.map((album) => (
                 <Link
                   key={album.id}
@@ -62,7 +63,7 @@ export default async function GalleryPage() {
                   </div>
                 </Link>
               ))}
-            </div>
+            </FadeIn>
           )}
         </div>
       </div>
