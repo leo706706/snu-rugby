@@ -9,11 +9,10 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const heroImage = await getBanner("home");
-  const frames = [heroImage, "/images/rugby_08.jpg", "/images/rugby_138.jpg", "/images/rugby_62.jpg"];
 
   return (
     <>
-      <ScrollHero frames={frames} />
+      <ScrollHero posterUrl={heroImage} />
       <PlayersPreview />
       <SchedulePreview />
       <NoticesPreview />
