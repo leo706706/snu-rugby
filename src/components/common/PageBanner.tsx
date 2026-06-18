@@ -4,18 +4,21 @@ export default function PageBanner({
   imageUrl,
   title,
   subtitle,
+  objectPosition = "center",
 }: {
   imageUrl: string;
   title: string;
   subtitle: string;
+  objectPosition?: string;
 }) {
   return (
-    <section className="relative flex h-64 items-center overflow-hidden sm:h-80">
+    <section className="relative flex h-72 items-center overflow-hidden sm:h-96">
       <Image
         src={imageUrl}
         alt=""
         fill
         priority
+        style={{ objectPosition }}
         className="object-cover brightness-[0.45]"
       />
       <div className="container-page relative z-10 text-white">

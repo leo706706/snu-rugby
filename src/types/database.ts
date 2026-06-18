@@ -93,7 +93,7 @@ export interface Admin {
   created_at: string;
 }
 
-export type PageKey = "home" | "players" | "schedule" | "notices" | "gallery";
+export type PageKey = "players" | "schedule" | "notices" | "gallery";
 
 export interface PageBanner {
   page_key: PageKey;

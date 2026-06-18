@@ -40,6 +40,7 @@ export default async function SchedulePage() {
         imageUrl={bannerImage}
         title="경기 일정 및 결과"
         subtitle="서울대학교 럭비부의 경기 일정과 결과입니다."
+        objectPosition="center 25%"
       />
       <div className="section">
         <div className="container-page">
