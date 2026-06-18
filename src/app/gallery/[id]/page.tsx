@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAlbum } from "@/lib/data/gallery";
+import PhotoLightbox from "@/components/gallery/PhotoLightbox";
 
 export const dynamic = "force-dynamic";
 
@@ -32,25 +32,7 @@ export default async function AlbumDetailPage({
         {photos.length === 0 ? (
           <p className="mt-16 text-center text-neutral-400">등록된 사진이 없습니다.</p>
         ) : (
-          <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
-            {photos.map((photo) => (
-              <a
-                key={photo.id}
-                href={photo.image_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative block aspect-square overflow-hidden rounded-xl bg-navy-50"
-              >
-                <Image
-                  src={photo.image_url}
-                  alt={photo.caption ?? album.title}
-                  fill
-                  className="object-cover transition-transform duration-300 hover:scale-105"
-                  sizes="(min-width: 640px) 33vw, 50vw"
-                />
-              </a>
-            ))}
-          </div>
+          <PhotoLightbox photos={photos} albumTitle={album.title} />
         )}
       </div>
     </div>

@@ -25,7 +25,7 @@ function formatDate(iso: string) {
 
 export default function GameCard({ game }: { game: Game }) {
   return (
-    <div className="flex flex-col gap-4 rounded-2xl border border-navy-50 bg-white p-6 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col gap-4 rounded-2xl border border-navy-50 bg-white p-6 transition-colors hover:border-navy-200 hover:bg-navy-50/40 sm:flex-row sm:items-center sm:justify-between">
       <div>
         <div className="text-xs font-medium text-navy-400">
           {game.status === "cancelled" ? "취소됨" : formatDate(game.game_date)}
