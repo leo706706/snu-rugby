@@ -1,6 +1,6 @@
 import { getBanner } from "@/lib/data/banners";
 import HeroBanner from "@/components/home/HeroBanner";
-import VideoPopup from "@/components/home/VideoPopup";
+import HighlightVideo from "@/components/home/HighlightVideo";
 import PlayersPreview from "@/components/home/PlayersPreview";
 import SchedulePreview from "@/components/home/SchedulePreview";
 import NoticesPreview from "@/components/home/NoticesPreview";
@@ -14,7 +14,7 @@ export default async function Home() {
   return (
     <>
       <HeroBanner imageUrl={bannerImage} />
-      <VideoPopup />
+      <HighlightVideo />
       <PlayersPreview />
       <SchedulePreview />
       <NoticesPreview />
