@@ -30,7 +30,7 @@ export default async function PlayersPage({
         imageUrl={bannerImage}
         title="선수단"
         subtitle="서울대학교 럭비부 선수단을 소개합니다."
-        objectPosition="center 28%"
+        objectPosition="center 16%"
       />
       <div className="section">
         <div className="container-page">

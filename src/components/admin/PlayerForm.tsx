@@ -61,6 +61,14 @@ export default function PlayerForm({
         {photoUrl && (
           <div className="relative mt-2 h-32 w-32 overflow-hidden rounded-xl bg-navy-50">
             <Image src={photoUrl} alt="" fill className="object-cover" />
+            <button
+              type="button"
+              onClick={() => setPhotoUrl("")}
+              aria-label="사진 삭제"
+              className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-xs text-white hover:bg-black/80"
+            >
+              ×
+            </button>
           </div>
         )}
         <div className="mt-2">
