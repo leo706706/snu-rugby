@@ -1,4 +1,4 @@
-import ScrollHero from "@/components/home/ScrollHero";
+import HeroBanner from "@/components/home/HeroBanner";
 import PlayersPreview from "@/components/home/PlayersPreview";
 import SchedulePreview from "@/components/home/SchedulePreview";
 import NoticesPreview from "@/components/home/NoticesPreview";
@@ -12,7 +12,7 @@ export default async function Home() {
 
   return (
     <>
-      <ScrollHero posterUrl={heroImage} />
+      <HeroBanner imageUrl={heroImage} />
       <PlayersPreview />
       <SchedulePreview />
       <NoticesPreview />
