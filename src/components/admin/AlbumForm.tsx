@@ -46,8 +46,18 @@ export default function AlbumForm({
       <div>
         <label className={labelClass}>커버 이미지</label>
         {coverImageUrl && (
-          <div className="relative mt-2 h-32 w-48 overflow-hidden rounded-xl bg-navy-50">
+          <div className="group relative mt-2 h-32 w-48 overflow-hidden rounded-xl bg-navy-50">
             <Image src={coverImageUrl} alt="" fill className="object-cover" />
+            <button
+              type="button"
+              onClick={() => {
+                if (!window.confirm("커버 이미지를 삭제하시겠습니까?")) return;
+                setCoverImageUrl("");
+              }}
+              className="absolute right-1.5 top-1.5 rounded-full bg-black/60 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100"
+            >
+              삭제
+            </button>
           </div>
         )}
         <div className="mt-2">

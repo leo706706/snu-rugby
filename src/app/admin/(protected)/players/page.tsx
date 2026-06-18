@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getPlayers } from "@/lib/data/players";
 import { deletePlayer } from "@/lib/actions/players";
 import DeleteButton from "@/components/admin/DeleteButton";
@@ -23,49 +24,63 @@ export default async function AdminPlayersPage() {
         </Link>
       </div>
 
-      <div className="mt-6 overflow-x-auto rounded-2xl border border-navy-50">
-        <table className="w-full min-w-[640px] text-left text-sm">
-          <thead className="bg-navy-50 text-neutral-500">
-            <tr>
-              <th className="px-4 py-3">번호</th>
-              <th className="px-4 py-3">이름</th>
-              <th className="px-4 py-3">구분</th>
-              <th className="px-4 py-3">재학/OB</th>
-              <th className="px-4 py-3">포지션</th>
-              <th className="px-4 py-3" />
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-navy-50">
-            {players.map((player) => (
-              <tr key={player.id}>
-                <td className="px-4 py-3">{player.jersey_number ?? "-"}</td>
-                <td className="px-4 py-3 font-medium text-neutral-900">{player.name}</td>
-                <td className="px-4 py-3">{DIVISION_LABEL[player.division]}</td>
-                <td className="px-4 py-3">{STATUS_LABEL[player.status]}</td>
-                <td className="px-4 py-3">{player.position ?? "-"}</td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center justify-end gap-3">
-                    <Link
-                      href={`/admin/players/${player.id}`}
-                      className="text-sm font-medium text-navy hover:underline"
-                    >
-                      수정
-                    </Link>
-                    <DeleteButton action={deletePlayer.bind(null, player.id)} />
+      {players.length === 0 ? (
+        <p className="mt-16 text-center text-neutral-400">등록된 선수가 없습니다.</p>
+      ) : (
+        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {players.map((player) => (
+            <div
+              key={player.id}
+              className="overflow-hidden rounded-2xl border border-navy-50 bg-white"
+            >
+              <div className="relative aspect-[4/5] bg-navy-50">
+                {player.photo_url ? (
+                  <Image
+                    src={player.photo_url}
+                    alt={player.name}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-4xl font-semibold text-navy-200">
+                    {player.name.slice(0, 1)}
                   </div>
-                </td>
-              </tr>
-            ))}
-            {players.length === 0 && (
-              <tr>
-                <td colSpan={6} className="px-4 py-10 text-center text-neutral-400">
-                  등록된 선수가 없습니다.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+                )}
+                {player.jersey_number !== null && (
+                  <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-navy text-sm font-semibold text-white">
+                    {player.jersey_number}
+                  </span>
+                )}
+                {player.status === "ob" && (
+                  <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-medium text-navy">
+                    OB
+                  </span>
+                )}
+              </div>
+
+              <div className="p-4">
+                <p className="font-semibold text-neutral-900">{player.name}</p>
+                <p className="mt-1 text-sm text-neutral-500">
+                  {DIVISION_LABEL[player.division]}
+                  {player.position ? ` · ${player.position}` : ""}
+                </p>
+                <p className="mt-1 text-xs text-neutral-400">{STATUS_LABEL[player.status]}</p>
+
+                <div className="mt-3 flex items-center justify-between border-t border-navy-50 pt-3">
+                  <Link
+                    href={`/admin/players/${player.id}`}
+                    className="text-sm font-medium text-navy hover:underline"
+                  >
+                    수정
+                  </Link>
+                  <DeleteButton action={deletePlayer.bind(null, player.id)} />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
