@@ -1,7 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function HeroBanner({ imageUrl }: { imageUrl: string }) {
+export default function HeroBanner({
+  imageUrl,
+  positionDesktop = 50,
+  positionMobile = 50,
+}: {
+  imageUrl: string;
+  positionDesktop?: number;
+  positionMobile?: number;
+}) {
   return (
     <section className="relative flex h-screen min-h-[640px] items-center justify-center overflow-hidden">
       <Image
@@ -9,7 +17,16 @@ export default function HeroBanner({ imageUrl }: { imageUrl: string }) {
         alt=""
         fill
         priority
-        className="object-cover brightness-[0.45]"
+        style={{ objectPosition: `center ${positionMobile}%` }}
+        className="object-cover brightness-[0.45] sm:hidden"
+      />
+      <Image
+        src={imageUrl}
+        alt=""
+        fill
+        priority
+        style={{ objectPosition: `center ${positionDesktop}%` }}
+        className="hidden object-cover brightness-[0.45] sm:block"
       />
 
       <div className="relative z-10 flex flex-col items-center px-6 text-center text-white">

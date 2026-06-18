@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getAlbums } from "@/lib/data/gallery";
-import { getBanner } from "@/lib/data/banners";
+import { getBannerData } from "@/lib/data/banners";
 import PageBanner from "@/components/common/PageBanner";
 import FadeIn from "@/components/common/FadeIn";
 
@@ -16,14 +16,16 @@ function formatDate(date: string | null) {
 }
 
 export default async function GalleryPage() {
-  const [albums, bannerImage] = await Promise.all([getAlbums(), getBanner("gallery")]);
+  const [albums, banner] = await Promise.all([getAlbums(), getBannerData("gallery")]);
 
   return (
     <div>
       <PageBanner
-        imageUrl={bannerImage}
+        imageUrl={banner.imageUrl}
         title="갤러리"
         subtitle="앨범별로 모아보는 서울대학교 럭비부의 순간들입니다."
+        positionDesktop={banner.positionDesktop}
+        positionMobile={banner.positionMobile}
       />
       <div className="section">
         <div className="container-page">

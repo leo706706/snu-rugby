@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { getPlayers } from "@/lib/data/players";
-import { getBanner } from "@/lib/data/banners";
+import { getBannerData } from "@/lib/data/banners";
 import PlayerFilters from "@/components/players/PlayerFilters";
 import PlayerGrid from "@/components/players/PlayerGrid";
 import PageBanner from "@/components/common/PageBanner";
@@ -15,22 +15,23 @@ export default async function PlayersPage({
   searchParams: Promise<{ division?: string; status?: string; q?: string }>;
 }) {
   const params = await searchParams;
-  const [players, bannerImage] = await Promise.all([
+  const [players, banner] = await Promise.all([
     getPlayers({
       division: (params.division as Division) || undefined,
       status: (params.status as PlayerStatus) || undefined,
       search: params.q || undefined,
     }),
-    getBanner("players"),
+    getBannerData("players"),
   ]);
 
   return (
     <div>
       <PageBanner
-        imageUrl={bannerImage}
+        imageUrl={banner.imageUrl}
         title="선수단"
         subtitle="서울대학교 럭비부 선수단을 소개합니다."
-        objectPosition="center 16%"
+        positionDesktop={banner.positionDesktop}
+        positionMobile={banner.positionMobile}
       />
       <div className="section">
         <div className="container-page">

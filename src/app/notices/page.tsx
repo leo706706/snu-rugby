@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getNotices } from "@/lib/data/notices";
-import { getBanner } from "@/lib/data/banners";
+import { getBannerData } from "@/lib/data/banners";
 import PageBanner from "@/components/common/PageBanner";
 import FadeIn from "@/components/common/FadeIn";
 
@@ -15,14 +15,16 @@ function formatDate(iso: string) {
 }
 
 export default async function NoticesPage() {
-  const [notices, bannerImage] = await Promise.all([getNotices(), getBanner("notices")]);
+  const [notices, banner] = await Promise.all([getNotices(), getBannerData("notices")]);
 
   return (
     <div>
       <PageBanner
-        imageUrl={bannerImage}
+        imageUrl={banner.imageUrl}
         title="공지사항"
         subtitle="서울대학교 럭비부의 공지사항입니다."
+        positionDesktop={banner.positionDesktop}
+        positionMobile={banner.positionMobile}
       />
       <div className="section">
         <div className="container-page">

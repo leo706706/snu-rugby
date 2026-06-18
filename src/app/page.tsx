@@ -1,4 +1,4 @@
-import { getBanner } from "@/lib/data/banners";
+import { getBannerData } from "@/lib/data/banners";
 import HeroBanner from "@/components/home/HeroBanner";
 import HighlightVideo from "@/components/home/HighlightVideo";
 import PlayersPreview from "@/components/home/PlayersPreview";
@@ -10,11 +10,15 @@ import GalleryPreview from "@/components/home/GalleryPreview";
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const bannerImage = await getBanner("home");
+  const banner = await getBannerData("home");
 
   return (
     <>
-      <HeroBanner imageUrl={bannerImage} />
+      <HeroBanner
+        imageUrl={banner.imageUrl}
+        positionDesktop={banner.positionDesktop}
+        positionMobile={banner.positionMobile}
+      />
       <HighlightVideo />
       <PlayersPreview />
       <SchedulePreview />

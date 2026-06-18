@@ -4,12 +4,14 @@ export default function PageBanner({
   imageUrl,
   title,
   subtitle,
-  objectPosition = "center",
+  positionDesktop = 50,
+  positionMobile = 50,
 }: {
   imageUrl: string;
   title: string;
   subtitle: string;
-  objectPosition?: string;
+  positionDesktop?: number;
+  positionMobile?: number;
 }) {
   return (
     <section className="relative flex h-72 items-center overflow-hidden sm:h-96">
@@ -18,8 +20,16 @@ export default function PageBanner({
         alt=""
         fill
         priority
-        style={{ objectPosition }}
-        className="object-cover brightness-[0.45]"
+        style={{ objectPosition: `center ${positionMobile}%` }}
+        className="object-cover brightness-[0.45] sm:hidden"
+      />
+      <Image
+        src={imageUrl}
+        alt=""
+        fill
+        priority
+        style={{ objectPosition: `center ${positionDesktop}%` }}
+        className="hidden object-cover brightness-[0.45] sm:block"
       />
       <div className="container-page relative z-10 text-white">
         <h1 className="text-3xl font-semibold sm:text-4xl">{title}</h1>

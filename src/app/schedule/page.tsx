@@ -1,12 +1,12 @@
 import { getAllGames } from "@/lib/data/games";
-import { getBanner } from "@/lib/data/banners";
+import { getBannerData } from "@/lib/data/banners";
 import PageBanner from "@/components/common/PageBanner";
 import ScheduleGames from "@/components/schedule/ScheduleGames";
 
 export const dynamic = "force-dynamic";
 
 export default async function SchedulePage() {
-  const [games, bannerImage] = await Promise.all([getAllGames(), getBanner("schedule")]);
+  const [games, banner] = await Promise.all([getAllGames(), getBannerData("schedule")]);
   const now = Date.now();
   const upcoming = games
     .filter((g) => new Date(g.game_date).getTime() >= now)
@@ -18,10 +18,11 @@ export default async function SchedulePage() {
   return (
     <div>
       <PageBanner
-        imageUrl={bannerImage}
+        imageUrl={banner.imageUrl}
         title="경기 일정 및 결과"
         subtitle="서울대학교 럭비부의 경기 일정과 결과입니다."
-        objectPosition="center 13%"
+        positionDesktop={banner.positionDesktop}
+        positionMobile={banner.positionMobile}
       />
       <div className="section">
         <div className="container-page">

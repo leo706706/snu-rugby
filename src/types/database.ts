@@ -98,6 +98,8 @@ export type PageKey = "home" | "players" | "schedule" | "notices" | "gallery";
 export interface PageBanner {
   page_key: PageKey;
   image_url: string;
+  position_desktop: number;
+  position_mobile: number;
   created_at: string;
   updated_at: string;
 }

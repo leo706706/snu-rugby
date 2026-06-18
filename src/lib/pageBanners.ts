@@ -15,3 +15,12 @@ export const DEFAULT_BANNERS: Record<PageKey, string> = {
   notices: "/images/rugby_138.jpg",
   gallery: "/images/rugby_197.jpg",
 };
+
+/** Vertical crop focus (0-100, "center Y%") per breakpoint. */
+export const DEFAULT_POSITIONS: Record<PageKey, { desktop: number; mobile: number }> = {
+  home: { desktop: 50, mobile: 50 },
+  players: { desktop: 16, mobile: 16 },
+  schedule: { desktop: 13, mobile: 13 },
+  notices: { desktop: 50, mobile: 50 },
+  gallery: { desktop: 50, mobile: 50 },
+};
