@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import type { AlbumWithPhotoCount, AlbumWithPhotos } from "@/types/database";
+import type { AlbumWithPhotoCount, AlbumWithPhotos, GalleryPhoto } from "@/types/database";
 
 export async function getAlbums() {
   const supabase = await createClient();
@@ -10,6 +10,17 @@ export async function getAlbums() {
     .order("created_at", { ascending: false });
   if (error) throw error;
   return (data ?? []) as unknown as AlbumWithPhotoCount[];
+}
+
+export async function getRecentPhotos(limit: number) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("gallery_photos")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(limit);
+  if (error) throw error;
+  return (data ?? []) as GalleryPhoto[];
 }
 
 export async function getAlbum(id: string) {

@@ -5,6 +5,7 @@ import PlayersPreview from "@/components/home/PlayersPreview";
 import SchedulePreview from "@/components/home/SchedulePreview";
 import NoticesPreview from "@/components/home/NoticesPreview";
 import InstagramFeed from "@/components/home/InstagramFeed";
+import GalleryPreview from "@/components/home/GalleryPreview";
 
 export const dynamic = "force-dynamic";
 
@@ -19,6 +20,7 @@ export default async function Home() {
       <SchedulePreview />
       <NoticesPreview />
       <InstagramFeed />
+      <GalleryPreview />
     </>
   );
 }
