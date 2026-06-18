@@ -59,15 +59,17 @@ export default function PlayerForm({
       <div>
         <label className={labelClass}>선수 사진</label>
         {photoUrl && (
-          <div className="relative mt-2 h-32 w-32 overflow-hidden rounded-xl bg-navy-50">
+          <div className="group relative mt-2 h-32 w-32 overflow-hidden rounded-xl bg-navy-50">
             <Image src={photoUrl} alt="" fill className="object-cover" />
             <button
               type="button"
-              onClick={() => setPhotoUrl("")}
-              aria-label="사진 삭제"
-              className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-xs text-white hover:bg-black/80"
+              onClick={() => {
+                if (!window.confirm("이 사진을 삭제하시겠습니까?")) return;
+                setPhotoUrl("");
+              }}
+              className="absolute right-1.5 top-1.5 rounded-full bg-black/60 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100"
             >
-              ×
+              삭제
             </button>
           </div>
         )}

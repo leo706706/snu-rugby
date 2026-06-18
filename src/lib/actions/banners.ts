@@ -11,6 +11,18 @@ export async function upsertBanner(pageKey: PageKey, imageUrl: string) {
     .upsert({ page_key: pageKey, image_url: imageUrl }, { onConflict: "page_key" });
   if (error) return { error: error.message };
 
+  revalidateBannerPaths();
+}
+
+export async function deleteBanner(pageKey: PageKey) {
+  const supabase = await createClient();
+  const { error } = await supabase.from("page_banners").delete().eq("page_key", pageKey);
+  if (error) return { error: error.message };
+
+  revalidateBannerPaths();
+}
+
+function revalidateBannerPaths() {
   revalidatePath("/");
   revalidatePath("/players");
   revalidatePath("/schedule");
