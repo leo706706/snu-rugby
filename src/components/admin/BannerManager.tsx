@@ -43,41 +43,43 @@ export default function BannerManager({
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      {(Object.keys(PAGE_LABELS) as PageKey[]).map((pageKey) => {
-        const isCustom = banners[pageKey] !== DEFAULT_BANNERS[pageKey];
-        return (
-          <div key={pageKey} className="rounded-2xl border border-navy-50 p-5">
-            <p className="font-semibold text-neutral-900">{PAGE_LABELS[pageKey]} 페이지</p>
+    <div>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {(Object.keys(PAGE_LABELS) as PageKey[]).map((pageKey) => {
+          const isCustom = banners[pageKey] !== DEFAULT_BANNERS[pageKey];
+          return (
+            <div key={pageKey} className="rounded-2xl border border-navy-50 p-5">
+              <p className="font-semibold text-neutral-900">{PAGE_LABELS[pageKey]} 페이지</p>
 
-            <div className="group relative mt-3 h-32 w-full max-w-md overflow-hidden rounded-xl bg-navy-50 sm:h-40">
-              <Image src={banners[pageKey]} alt="" fill className="object-cover" />
-              {isCustom && (
-                <button
-                  type="button"
-                  onClick={() => handleDelete(pageKey)}
-                  disabled={savingKey === pageKey}
-                  className="absolute right-1.5 top-1.5 rounded-full bg-black/60 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100 disabled:opacity-60"
-                >
-                  삭제
-                </button>
-              )}
+              <div className="group relative mt-3 aspect-[4/3] w-full overflow-hidden rounded-xl bg-navy-50">
+                <Image src={banners[pageKey]} alt="" fill className="object-cover" />
+                {isCustom && (
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(pageKey)}
+                    disabled={savingKey === pageKey}
+                    className="absolute right-1.5 top-1.5 rounded-full bg-black/60 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100 disabled:opacity-60"
+                  >
+                    삭제
+                  </button>
+                )}
+              </div>
+
+              <div className="mt-3">
+                <Dropzone
+                  bucket="gallery"
+                  pathPrefix="banners"
+                  accept={{ "image/*": [".png", ".jpg", ".jpeg", ".webp", ".gif"] }}
+                  onUploaded={(urls) => handleUploaded(pageKey, urls)}
+                  label={savingKey === pageKey ? "저장 중..." : "새 이미지를 드래그하거나 클릭해서 업로드"}
+                />
+              </div>
             </div>
+          );
+        })}
+      </div>
 
-            <div className="mt-3 max-w-md">
-              <Dropzone
-                bucket="gallery"
-                pathPrefix="banners"
-                accept={{ "image/*": [".png", ".jpg", ".jpeg", ".webp", ".gif"] }}
-                onUploaded={(urls) => handleUploaded(pageKey, urls)}
-                label={savingKey === pageKey ? "저장 중..." : "새 이미지를 드래그하거나 클릭해서 업로드"}
-              />
-            </div>
-          </div>
-        );
-      })}
-
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
     </div>
   );
 }
