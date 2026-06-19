@@ -47,3 +47,33 @@ export async function deletePlayer(id: string) {
   revalidatePath("/players");
   revalidatePath("/admin/players");
 }
+
+export async function movePlayer(playerId: string, direction: "up" | "down") {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("players")
+    .select("id")
+    .order("order_index", { ascending: true })
+    .order("created_at", { ascending: true });
+  if (error) return { error: error.message };
+
+  const ids = (data ?? []).map((p) => p.id as string);
+  const idx = ids.indexOf(playerId);
+  if (idx === -1) return;
+
+  const swapIdx = direction === "up" ? idx - 1 : idx + 1;
+  if (swapIdx < 0 || swapIdx >= ids.length) return;
+
+  [ids[idx], ids[swapIdx]] = [ids[swapIdx], ids[idx]];
+
+  for (let i = 0; i < ids.length; i++) {
+    const { error: updateError } = await supabase
+      .from("players")
+      .update({ order_index: i })
+      .eq("id", ids[i]);
+    if (updateError) return { error: updateError.message };
+  }
+
+  revalidatePath("/players");
+  revalidatePath("/admin/players");
+}
