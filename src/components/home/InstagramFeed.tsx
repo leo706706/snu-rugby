@@ -1,8 +1,12 @@
 import Image from "next/image";
 import { getInstagramFeed } from "@/lib/instagram";
+import { getSiteSettings } from "@/lib/data/settings";
 
 export default async function InstagramFeed() {
-  const posts = await getInstagramFeed(4);
+  const [posts, { instagramUrl, instagramHandle }] = await Promise.all([
+    getInstagramFeed(4),
+    getSiteSettings(),
+  ]);
 
   return (
     <section className="section">
@@ -13,11 +17,11 @@ export default async function InstagramFeed() {
               Instagram
             </p>
             <h2 className="mt-2 text-2xl font-semibold text-neutral-900 sm:text-3xl">
-              @snu__rugby
+              {instagramHandle}
             </h2>
           </div>
           <a
-            href="https://www.instagram.com/snu__rugby/"
+            href={instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm font-medium text-navy hover:underline"

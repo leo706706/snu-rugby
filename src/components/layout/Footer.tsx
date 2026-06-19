@@ -1,7 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getSiteSettings } from "@/lib/data/settings";
 
-export default function Footer() {
+export default async function Footer() {
+  const { instagramUrl, instagramHandle } = await getSiteSettings();
+
   return (
     <footer className="bg-black text-neutral-400">
       <div className="container-page flex flex-col gap-6 py-12 sm:flex-row sm:items-start sm:justify-between">
@@ -15,12 +18,12 @@ export default function Footer() {
 
         <div className="flex flex-col gap-1 text-sm text-neutral-400">
           <a
-            href="https://www.instagram.com/snu__rugby/"
+            href={instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white"
           >
-            Instagram @snu__rugby
+            Instagram {instagramHandle}
           </a>
           <Link href="/admin/login" className="hover:text-white">
             관리자

@@ -1,4 +1,5 @@
 import { getBannerData } from "@/lib/data/banners";
+import { getSiteSettings } from "@/lib/data/settings";
 import HeroBanner from "@/components/home/HeroBanner";
 import HighlightVideo from "@/components/home/HighlightVideo";
 import PlayersPreview from "@/components/home/PlayersPreview";
@@ -10,12 +11,13 @@ import GalleryPreview from "@/components/home/GalleryPreview";
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const banner = await getBannerData("home");
+  const [banner, { instagramUrl }] = await Promise.all([getBannerData("home"), getSiteSettings()]);
 
   return (
     <>
       <HeroBanner
         imageUrl={banner.imageUrl}
+        instagramUrl={instagramUrl}
         positionDesktop={banner.positionDesktop}
         positionMobile={banner.positionMobile}
       />

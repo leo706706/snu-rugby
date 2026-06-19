@@ -103,3 +103,10 @@ export interface PageBanner {
   created_at: string;
   updated_at: string;
 }
+
+export interface SiteSettings {
+  id: number;
+  instagram_url: string;
+  instagram_handle: string;
+  updated_at: string;
+}

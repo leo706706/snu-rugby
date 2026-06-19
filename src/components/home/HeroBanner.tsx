@@ -3,10 +3,12 @@ import Link from "next/link";
 
 export default function HeroBanner({
   imageUrl,
+  instagramUrl,
   positionDesktop = 50,
   positionMobile = 50,
 }: {
   imageUrl: string;
+  instagramUrl: string;
   positionDesktop?: number;
   positionMobile?: number;
 }) {
@@ -37,7 +39,7 @@ export default function HeroBanner({
           One for All, All for One
         </p>
         <Link
-          href="https://www.instagram.com/snu__rugby/"
+          href={instagramUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="mt-10 rounded-full bg-white px-7 py-3 text-sm font-semibold text-navy transition-transform hover:scale-105"
