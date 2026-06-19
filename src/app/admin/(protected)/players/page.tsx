@@ -22,12 +22,7 @@ export default async function AdminPlayersPage() {
       {players.length === 0 ? (
         <p className="mt-16 text-center text-neutral-400">등록된 선수가 없습니다.</p>
       ) : (
-        <>
-          <p className="mt-2 text-sm text-neutral-500">
-            ↑↓ 버튼으로 순서를 바꾸면 선수단 페이지에 표시되는 순서도 바뀝니다.
-          </p>
-          <PlayerOrderGrid players={players} />
-        </>
+        <PlayerOrderGrid players={players} />
       )}
     </div>
   );
