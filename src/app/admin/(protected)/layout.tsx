@@ -9,6 +9,7 @@ const LINKS = [
   { href: "/admin/gallery", label: "갤러리" },
   { href: "/admin/banners", label: "페이지 배너" },
   { href: "/admin/settings", label: "사이트 설정" },
+  { href: "/admin/admins", label: "관리자 계정" },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
