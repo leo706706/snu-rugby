@@ -8,3 +8,5 @@ alter table public.page_banners
 alter table public.page_banners
   add constraint page_banners_position_desktop_range check (position_desktop between 0 and 100),
   add constraint page_banners_position_mobile_range check (position_mobile between 0 and 100);
+
+notify pgrst, 'reload schema';
