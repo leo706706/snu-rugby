@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { createClient } from "@/lib/supabase/client";
+import { uploadFile } from "@/lib/uploadFile";
 import ImageCropper from "@/components/admin/ImageCropper";
 
 interface DropzoneProps {
@@ -35,21 +35,10 @@ export default function Dropzone({
       setError(null);
 
       try {
-        const supabase = createClient();
         const urls: string[] = [];
-
         for (const file of files) {
-          const path = `${pathPrefix ? `${pathPrefix}/` : ""}${crypto.randomUUID()}-${file.name}`;
-          const { error: uploadError } = await supabase.storage
-            .from(bucket)
-            .upload(path, file, { cacheControl: "3600", upsert: false });
-
-          if (uploadError) throw uploadError;
-
-          const { data } = supabase.storage.from(bucket).getPublicUrl(path);
-          urls.push(data.publicUrl);
+          urls.push(await uploadFile(bucket, file, pathPrefix));
         }
-
         onUploaded(urls);
       } catch (err) {
         setError(err instanceof Error ? err.message : "업로드에 실패했습니다.");
