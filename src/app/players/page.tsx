@@ -1,8 +1,10 @@
 import { Suspense } from "react";
 import { getPlayers } from "@/lib/data/players";
 import { getBannerData } from "@/lib/data/banners";
+import { getAdvisor } from "@/lib/data/advisor";
 import PlayerFilters from "@/components/players/PlayerFilters";
 import PlayerGrid from "@/components/players/PlayerGrid";
+import AdvisorCard from "@/components/players/AdvisorCard";
 import PageBanner from "@/components/common/PageBanner";
 import FadeIn from "@/components/common/FadeIn";
 import type { Division, PlayerStatus } from "@/types/database";
@@ -15,13 +17,14 @@ export default async function PlayersPage({
   searchParams: Promise<{ division?: string; status?: string; q?: string }>;
 }) {
   const params = await searchParams;
-  const [players, banner] = await Promise.all([
+  const [players, banner, advisor] = await Promise.all([
     getPlayers({
       division: (params.division as Division) || undefined,
       status: (params.status as PlayerStatus) || undefined,
       search: params.q || undefined,
     }),
     getBannerData("players"),
+    getAdvisor(),
   ]);
 
   return (
@@ -35,6 +38,12 @@ export default async function PlayersPage({
       />
       <div className="section">
         <div className="container-page">
+          {advisor?.name && (
+            <FadeIn className="mt-10">
+              <AdvisorCard advisor={advisor} />
+            </FadeIn>
+          )}
+
           <div className="mt-10">
             <Suspense>
               <PlayerFilters />

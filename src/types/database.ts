@@ -110,3 +110,12 @@ export interface SiteSettings {
   instagram_handle: string;
   updated_at: string;
 }
+
+export interface Advisor {
+  id: number;
+  name: string;
+  title: string;
+  photo_url: string | null;
+  career: string;
+  updated_at: string;
+}

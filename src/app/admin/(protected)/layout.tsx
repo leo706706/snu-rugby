@@ -4,6 +4,7 @@ import SignOutButton from "@/components/admin/SignOutButton";
 const LINKS = [
   { href: "/admin", label: "대시보드" },
   { href: "/admin/players", label: "선수단" },
+  { href: "/admin/advisor", label: "지도교수" },
   { href: "/admin/games", label: "경기" },
   { href: "/admin/notices", label: "공지사항" },
   { href: "/admin/gallery", label: "갤러리" },
