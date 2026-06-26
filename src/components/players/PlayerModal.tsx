@@ -82,6 +82,11 @@ export default function PlayerModal({
                   OB
                 </span>
               )}
+              {player.current_role && player.current_role !== "일반부원" && (
+                <span className="rounded-full bg-navy-50 px-2.5 py-1 text-xs font-medium text-navy">
+                  {player.current_role}
+                </span>
+              )}
             </div>
             <h3 className="mt-2 text-2xl font-semibold text-neutral-900">{player.name}</h3>
             {player.name_en && <p className="text-sm text-neutral-400">{player.name_en}</p>}
@@ -108,6 +113,12 @@ export default function PlayerModal({
               <div>
                 <dt className="text-neutral-400">몸무게</dt>
                 <dd className="mt-0.5 font-medium text-neutral-900">{player.weight_kg}kg</dd>
+              </div>
+            )}
+            {player.past_roles && (
+              <div className="col-span-2">
+                <dt className="text-neutral-400">이전 직책</dt>
+                <dd className="mt-0.5 font-medium text-neutral-900">{player.past_roles}</dd>
               </div>
             )}
           </dl>

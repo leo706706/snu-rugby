@@ -107,7 +107,14 @@ export default function PlayerOrderGrid({ players }: { players: Player[] }) {
               </div>
 
               <div className="p-4">
-                <p className="font-semibold text-neutral-900">{player.name}</p>
+                <div className="flex items-center gap-2">
+                  <p className="font-semibold text-neutral-900">{player.name}</p>
+                  {player.current_role && player.current_role !== "일반부원" && (
+                    <span className="rounded-full bg-navy-50 px-2 py-0.5 text-xs font-medium text-navy">
+                      {player.current_role}
+                    </span>
+                  )}
+                </div>
                 <p className="mt-1 text-sm text-neutral-500">
                   {DIVISION_LABEL[player.division]}
                   {player.position ? ` · ${player.position}` : ""}

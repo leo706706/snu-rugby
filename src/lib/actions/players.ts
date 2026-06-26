@@ -17,6 +17,8 @@ export interface PlayerInput {
   weight_kg: number | null;
   photo_url: string | null;
   bio: string | null;
+  current_role: string | null;
+  past_roles: string | null;
 }
 
 export async function createPlayer(input: PlayerInput) {

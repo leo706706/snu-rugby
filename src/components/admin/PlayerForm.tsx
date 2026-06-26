@@ -22,7 +22,9 @@ const POSITIONS = [
   "미정",
 ];
 
-const JERSEY_NUMBERS = Array.from({ length: 99 }, (_, i) => i + 1);
+const JERSEY_NUMBERS = Array.from({ length: 15 }, (_, i) => i + 1);
+
+const ROLES = ["주장", "부주장", "조교", "일반부원"];
 
 const inputClass =
   "mt-1 w-full rounded-lg border border-navy-100 px-3 py-2 text-sm outline-none focus:border-navy";
@@ -48,6 +50,8 @@ export default function PlayerForm({
   const [weightKg, setWeightKg] = useState(initial?.weight_kg?.toString() ?? "");
   const [photoUrl, setPhotoUrl] = useState(initial?.photo_url ?? "");
   const [bio, setBio] = useState(initial?.bio ?? "");
+  const [currentRole, setCurrentRole] = useState(initial?.current_role ?? "");
+  const [pastRoles, setPastRoles] = useState(initial?.past_roles ?? "");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -72,6 +76,8 @@ export default function PlayerForm({
       weight_kg: weightKg ? Number(weightKg) : null,
       photo_url: photoUrl || null,
       bio: bio || null,
+      current_role: currentRole || null,
+      past_roles: pastRoles || null,
     });
 
     setSubmitting(false);
@@ -157,6 +163,33 @@ export default function PlayerForm({
               </button>
             );
           })}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className={labelClass}>현재 직책</label>
+          <select
+            value={currentRole}
+            onChange={(e) => setCurrentRole(e.target.value)}
+            className={inputClass}
+          >
+            <option value="">없음</option>
+            {ROLES.map((role) => (
+              <option key={role} value={role}>
+                {role}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className={labelClass}>이전 직책</label>
+          <input
+            value={pastRoles}
+            onChange={(e) => setPastRoles(e.target.value)}
+            placeholder="예: 2025년도 주장, 2023년도 부주장"
+            className={inputClass}
+          />
         </div>
       </div>
 

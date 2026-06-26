@@ -16,6 +16,8 @@ export interface Player {
   weight_kg: number | null;
   photo_url: string | null;
   bio: string | null;
+  current_role: string | null;
+  past_roles: string | null;
   order_index: number;
   created_at: string;
 }
