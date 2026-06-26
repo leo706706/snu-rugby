@@ -7,6 +7,23 @@ import type { PlayerInput } from "@/lib/actions/players";
 
 const PHOTO_ASPECT = 4 / 5;
 
+const POSITIONS = [
+  "Prop",
+  "Hooker",
+  "Lock",
+  "Flanker",
+  "Number 8",
+  "Scrum-half",
+  "Fly-half",
+  "Center",
+  "Wing",
+  "Fullback",
+  "Utility",
+  "미정",
+];
+
+const JERSEY_NUMBERS = Array.from({ length: 99 }, (_, i) => i + 1);
+
 const inputClass =
   "mt-1 w-full rounded-lg border border-navy-100 px-3 py-2 text-sm outline-none focus:border-navy";
 const labelClass = "text-sm font-medium text-neutral-700";
@@ -21,7 +38,9 @@ export default function PlayerForm({
   const [name, setName] = useState(initial?.name ?? "");
   const [nameEn, setNameEn] = useState(initial?.name_en ?? "");
   const [jerseyNumber, setJerseyNumber] = useState(initial?.jersey_number?.toString() ?? "");
-  const [position, setPosition] = useState(initial?.position ?? "");
+  const [positions, setPositions] = useState<string[]>(
+    initial?.position ? initial.position.split(",").map((p) => p.trim()).filter(Boolean) : [],
+  );
   const [division, setDivision] = useState<Division>(initial?.division ?? "men");
   const [status, setStatus] = useState<PlayerStatus>(initial?.status ?? "current");
   const [studentId, setStudentId] = useState(initial?.student_id ?? "");
@@ -32,6 +51,10 @@ export default function PlayerForm({
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
+  function togglePosition(pos: string) {
+    setPositions((prev) => (prev.includes(pos) ? prev.filter((p) => p !== pos) : [...prev, pos]));
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSubmitting(true);
@@ -41,7 +64,7 @@ export default function PlayerForm({
       name,
       name_en: nameEn || null,
       jersey_number: jerseyNumber ? Number(jerseyNumber) : null,
-      position: position || null,
+      position: positions.length > 0 ? positions.join(", ") : null,
       division,
       status,
       student_id: studentId || null,
@@ -98,19 +121,42 @@ export default function PlayerForm({
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className={labelClass}>등번호</label>
-          <input
-            type="number"
-            value={jerseyNumber}
-            onChange={(e) => setJerseyNumber(e.target.value)}
-            className={inputClass}
-          />
-        </div>
-        <div>
-          <label className={labelClass}>포지션</label>
-          <input value={position} onChange={(e) => setPosition(e.target.value)} className={inputClass} />
+      <div>
+        <label className={labelClass}>등번호</label>
+        <select
+          value={jerseyNumber}
+          onChange={(e) => setJerseyNumber(e.target.value)}
+          className={`${inputClass} max-w-[160px]`}
+        >
+          <option value="">없음</option>
+          {JERSEY_NUMBERS.map((n) => (
+            <option key={n} value={n}>
+              {n}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label className={labelClass}>포지션 (복수 선택 가능)</label>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {POSITIONS.map((pos) => {
+            const selected = positions.includes(pos);
+            return (
+              <button
+                key={pos}
+                type="button"
+                onClick={() => togglePosition(pos)}
+                className={`rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
+                  selected
+                    ? "border-navy bg-navy text-white"
+                    : "border-navy-100 text-neutral-600 hover:border-navy-300"
+                }`}
+              >
+                {pos}
+              </button>
+            );
+          })}
         </div>
       </div>
 
