@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 
@@ -11,7 +12,14 @@ export async function inviteAdmin(email: string) {
   const { data: existing } = await supabase.from("admins").select("id").eq("email", email).maybeSingle();
   if (existing) return { error: "이미 등록된 관리자 이메일입니다." };
 
-  const { data: invited, error: inviteError } = await adminClient.auth.admin.inviteUserByEmail(email);
+  const host = (await headers()).get("host");
+  const protocol = host?.startsWith("localhost") ? "http" : "https";
+  const redirectTo = host ? `${protocol}://${host}/admin/accept-invite` : undefined;
+
+  const { data: invited, error: inviteError } = await adminClient.auth.admin.inviteUserByEmail(
+    email,
+    redirectTo ? { redirectTo } : undefined,
+  );
   if (inviteError || !invited.user) {
     return { error: inviteError?.message ?? "초대에 실패했습니다." };
   }

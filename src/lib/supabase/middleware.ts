@@ -29,8 +29,9 @@ export async function updateSession(request: NextRequest) {
 
   const isAdminRoute = request.nextUrl.pathname.startsWith("/admin");
   const isLoginRoute = request.nextUrl.pathname.startsWith("/admin/login");
+  const isAcceptInviteRoute = request.nextUrl.pathname.startsWith("/admin/accept-invite");
 
-  if (isAdminRoute && !isLoginRoute && !data.user) {
+  if (isAdminRoute && !isLoginRoute && !isAcceptInviteRoute && !data.user) {
     const redirectUrl = new URL("/admin/login", request.url);
     redirectUrl.searchParams.set("next", request.nextUrl.pathname);
     return NextResponse.redirect(redirectUrl);
